@@ -1,0 +1,195 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+        <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+        <link rel="stylesheet" href="{% static 'mainapp/css/main.css' %}">
+        <link rel="stylesheet" href="{% static 'mainapp/css/flickity.css' %}">
+        <script type="text/javascript" src="{% static 'mainapp/js/flickity.pkgd.js' %}"></script>
+        <script type="text/javascript" src="{% static 'mainapp/js/script.js' %}"></script>
+        {% block head %}{% endblock %}
+        <link rel="shortcut icon" href="{% static 'mainapp/images/songkolok.png' %}">
+        <title>{% block title %}{% endblock %}</title>
+    </head>
+
+    <body>
+        <div id="nav" class="grid">
+            <div class="logo">
+                <a href="{% url 'index' %}"><img id="logo-img" src="{% static 'mainapp/images/songkolok.png' %}"></a>
+                <a href="{% url 'index' %}"><img id="logo-title" src="{% static 'mainapp/images/logo-title.png' %}"></a>
+            </div>
+
+            <div class="menu-open" onclick="openNav()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+
+            <div id="mySidenav" class="sidenav">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <a href="#">Home</a>
+                <a href="#">MEN</a>
+                <a href="#">WOMEN</a>
+                <a href="#">KIDS</a>
+                <a href="#">EID SPEACIAL</a>
+                <a href="#">Home</a>
+                <a href="#">Home</a>
+                {% if isloggedin %}
+                    <a href="{% url 'logout' %}" style="cursor:pointer"><i class='fa fa-sign-out'></i> Log Out</a>
+                {% else %}
+                    <a style="cursor:pointer" onclick="login()"><i class='fas fa-user'></i> Login</a>
+                {% endif %}
+                <a style="cursor:pointer">My Profile</a>
+                <a href="#"><i id="shopping-bag" class='fas fa-shopping-bag'></i> Cart (0)</a>
+                <form id="search">
+                    <input type="text" placeholder="Search Products..." name="search">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+
+            <div class="links">
+                <form id="search" class="nav-menu">
+                    <input type="text" placeholder="Search Products..." name="search">
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                </form>
+                <a class="nav-menu" id="cart" href=""><i id="shopping-bag" class='fas fa-shopping-bag' ></i> Cart (0)</a>
+                <a class="nav-menu" style="cursor:pointer">My Profile</a>
+                {% if isloggedin %}
+                    <a href="{% url 'logout' %}" class="nav-menu" style="cursor:pointer"><i class='fa fa-sign-out'></i> Log Out</a>
+                {% else %}
+                    <a class="nav-menu" style="cursor:pointer" onclick="login()">Login <i class='far fa-user'></i></a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div id="login-block">
+            <div class="login-form">
+                <h1>Login</h1>
+                <form action="{% url 'index' %}" id="login" method="post">
+                    {% csrf_token %}
+                    <h4>Email / Phone</h4>
+                    <input type="email" class="fas fa-envelope" name="email" type="email" placeholder="&#xf0e0; Type your email/phone"><br>
+                    <h4>Password</h4>
+                    <input class="fas fa-lock" type="password" name="password"  placeholder="&#xf023; Type your password"><br>
+                    <a href="#"><h6>Forgot password?</h6></a>
+                    <button type="submit" name="login">Login</button>
+                </form>
+            </div>
+            <div class="line">
+                <div class="or">or</div>
+            </div>
+            <div class="login-social-media">
+                    <a href="https://www.facebook.com/" class="fab fa-facebook-f"></a>
+                    <a href="#" class="fab fa-twitter"></a>
+                    <a href="#" class="fab fa-google"></a>
+            </div>
+            <div class="signup-link">
+                <h5>DON’T HAVE AN ACCOUNT?</h5>
+                <a style="cursor:pointer" onclick="signup()">SIGN UP</a>
+            </div>
+        </div>
+
+        <div id="signup-block">
+            <div class="login-form">
+                <h1>Sign Up</h1>
+                <form action="{% url 'index' %}" method="post" id="login">
+                    {% csrf_token %}
+                    <h4>Email / Phone</h4>
+                    <input type="email" class="fas fa-envelope" name="email" placeholder="&#xf0e0; Type your email/phone"><br>
+                    <h4>Password</h4>
+                    <input type="password" class="fas fa-lock" name="password1" placeholder="&#xf023; Type your password"><br>
+                    <br>
+                    <h4>Re-Password</h4>
+                    <input type="password" class="fas fa-lock" name="password2" placeholder="&#xf023; Type your password again"><br>
+                    <button type="submit" name="signup">Sign up</button>
+                </form>
+            </div>
+            <div class="line">
+                <div class="or">or</div>
+            </div>
+            <div class="login-social-media">
+                    <a href="https://www.facebook.com/" class="fab fa-facebook-f"></a>
+                    <a href="#" class="fab fa-twitter"></a>
+                    <a href="#" class="fab fa-google"></a>
+            </div>
+        </div>
+
+        {% block body %}
+        {% endblock %}
+
+        <div class="product-show" id="product-show">
+            <div class="main-product" >
+                <div id="product_id">
+                    
+                </div>
+                <a href="javascript:void(0)" class="closebtn" onclick="closeProduct()">&times;</a>
+
+                <div class="product" id="product">
+                    <img src="{{ img }}" class="model">
+                    <h1>{{ product.title }}</h1>
+                    <form class="cart-form" action="" method="post">
+                        <div class="field">
+                            <div class="label">Color</div>
+                            <select class="" name="">
+                                <option value="White">White</option>
+                                <option value="Black">Black</option>
+                                <option value="Red">Red</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <div class="label">Size</div>
+                            <select class="" name="">
+                                <option value="White">S</option>
+                                <option value="Black">M</option>
+                                <option value="Red">L</option>
+                                <option value="Red">XL</option>
+                                <option value="Red">XXL</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <div class="label">Qualtity</div>
+                            <input type="number" min="1" name="" value="1">
+                        </div>
+                        <div class="
+                        ">
+                            <h2>Total Price: 350 Taka</h2>
+                        </div>
+                        <input type="submit" name="" value="Add To Cart">
+                    </form>
+                </div>
+                <div class="product-details">
+                    <h2>Description</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat praesentium dolores iure, quae, quo itaque quod beatae error ratione expedita quisquam sed! Fuga fugit nihil aliquam voluptates iusto minus rerum, illum nesciunt debitis dolor quaerat suscipit, autem tenetur at eos, vero quidem hic cumque corporis? Nisi, eius laborum est?</p>
+                </div>
+            </div>
+        </div>
+        <div id="contuct-us" class="grid">
+            <div class="social-links">
+                <a href="https://www.facebook.com/" class="fab fa-facebook-f"></a>
+                <a href="#" class="fab fa-twitter"></a>
+                <a href="#" class="fab fa-google"></a>
+                <a href="#" class="fab fa-linkedin"></a>
+                <a href="#" class="fab fa-youtube"></a>
+                <a href="#" class="fab fa-instagram"></a>
+            </div>
+            <div class="footer-links">
+                <a href="#">About</a>
+                <a href="#">Blogs</a>
+                <a href="#">Privacy</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Sceurity</a>
+                <a href="#">Events</a>
+                <a href="#">Contuct us</a>
+            </div>
+
+        </div>
+
+    </body>
+
+</html>

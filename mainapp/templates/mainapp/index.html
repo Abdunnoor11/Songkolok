@@ -1,0 +1,55 @@
+{% extends "mainapp/layout.html" %}
+{% load static %}
+
+{% block title %}
+Songkolok
+{% endblock %}
+
+
+{% block body %}
+
+<div id="images" class="grid">
+    <img src="{% static 'mainapp/images/poster4.png' %}" alt="">
+    <div class="main-menu-block">
+        <ul class="main-menu">
+            {% for k, v in main_menu.items %}
+                <li><a href="{% url 'category' k %}">{{ k }}</a> <!-- Category -->
+                    <ul class="sub-menu1">
+                        {% for i in v %}
+                            <a href="{% url 'category' i %}">{{ i }}</a>  <!-- Sub Category -->
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<div id="best-products" class="grid">
+    <h1>Best Sell Products</h1>
+        <div class="carousel" data-flickity='{ "wrapAround": true }'>
+            {% for product in products %}
+            <div class="carousel-cell">
+                <img src="{{ product.product_img.url }}" onclick="OpenProduct("{{ product.title }}")">
+                <div class="details">
+                    <h4  >{{ product.title }}</h4>
+                    <h3>Price: {{ product.price }} tk</h3>
+                    <i id="cart-bag" class='fas fa-shopping-bag'></i>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+</div>
+
+
+<div id="product-category" class="grid">
+    <h1>Category</h1>
+    <div class="category-box">
+        {% for category in categories %}
+        <div class="box2"><img src="{{ category.category_img.url }}" alt="">
+            <div class="text">{{ category.category_name }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "mainapp/layout.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'mainapp/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'mainapp/css/category.css' %}">
+{% endblock %}
+
+{% block title %}
+Songkolok
+{% endblock %}
+
+
+{% block body %}
+    <div id="images" class="grid">
+        <div class="main-menu-block">
+            <ul class="main-menu">
+                {% for k, v in main_menu.items %}
+                    <li><a href="{% url 'category' k %}">{{ k }}</a> <!-- Category -->
+                        <ul class="sub-menu1">
+                            {% for i in v %}
+                                <a href="{% url 'category' i %}">{{ i }}</a>  <!-- Sub Category -->
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="category-name">
+            <h1>{{ name }}</h1>
+        </div>
+    </div>
+
+    <div class="category-container" class="grid">
+        <div class="product-container">
+            {% for product in products %}
+                <div class="carousel-cell">
+                    <img src="{{ product.product_img.url }}" class="model">
+                    <div class="details">
+                        <h4>{{ product.title }}</h4>
+                        <h3>Price: {{ product.price }} tk</h3>
+                        <i id="cart-bag" class='fas fa-shopping-bag'></i>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
