@@ -59,7 +59,7 @@
                     <button type="submit"><i class="fa fa-search"></i></button>
                 </form>
                 <a class="nav-menu" id="cart" href=""><i id="shopping-bag" class='fas fa-shopping-bag' ></i> Cart (0)</a>
-                <a class="nav-menu" style="cursor:pointer">My Profile</a>
+                <a href="{% url 'myprofile' %}" class="nav-menu" style="cursor:pointer">My Profile</a>
                 {% if isloggedin %}
                     <a href="{% url 'logout' %}" class="nav-menu" style="cursor:pointer"><i class='fa fa-sign-out'></i> Log Out</a>
                 {% else %}
@@ -126,7 +126,7 @@
         <div class="product-show" id="product-show">
             <div class="main-product" >
                 <div id="product_id">
-                    
+
                 </div>
                 <a href="javascript:void(0)" class="closebtn" onclick="closeProduct()">&times;</a>
 

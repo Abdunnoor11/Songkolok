@@ -1,0 +1,97 @@
+{% extends "mainapp/layout.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'mainapp/css/myprofile.css' %}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+{% endblock %}
+
+{% block title %}
+Check Out
+{% endblock %}
+
+{% block body %}
+    <div id="images" class="grid">
+        <div class="main-menu-block">
+            <ul class="main-menu">
+                {% for k, v in main_menu.items %}
+                    <li><a href="{% url 'category' k %}">{{ k }}</a> <!-- Category -->
+                        <ul class="sub-menu1">
+                            {% for i in v %}
+                                <a href="{% url 'category' i %}">{{ i }}</a>  <!-- Sub Category -->
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="category-name">
+            <h1>{{ name }}</h1>
+        </div>
+    </div>
+
+    <div id="my-profile" class="grid">
+        <div class="info">
+            <h3>My Information</h3>
+            <form action="/action_page.php">
+                <div class="row">
+                    <div class="col-50">
+                        <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+                        <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
+                        <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                        <input type="text" id="email" name="email" placeholder="john@example.com">
+                        <div class="row">
+                            <div class="col-50">
+                                <label for="state">Phone Number</label>
+                                <input type="text" id="state" name="state" placeholder="NY">
+                            </div>
+                        </div>
+                        <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+                        <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
+                        <label for="city"><i class="fa fa-institution"></i> City</label>
+                        <input type="text" id="city" name="city" placeholder="New York">
+                    </div>
+                </div>
+                <input type="submit" value="UPDATE" class="btn">
+            </form>
+        </div>
+        <div class="info1">
+            <h3>My Orders</h3>
+            <table class="w3-table-all w3-hoverable">
+                <thead>
+                    <tr class="w3-light-grey">
+                        <th>Order ID</th>
+                        <th>Date</th>
+                        <th>Total Price</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>Smith</td>
+                    <td>20/11/2020</td>
+                    <td>50</td>
+                    <td>Deliverd</td>
+                </tr>
+                <tr>
+                    <td>Smith</td>
+                    <td>20/11/2020</td>
+                    <td>50</td>
+                    <td>Deliverd</td>
+                </tr>
+                <tr>
+                    <td>Smith</td>
+                    <td>20/11/2020</td>
+                    <td>50</td>
+                    <td>Deliverd</td>
+                </tr>
+                <tr>
+                    <td>Smith</td>
+                    <td>20/11/2020</td>
+                    <td>50</td>
+                    <td>Deliverd</td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+{% endblock %}

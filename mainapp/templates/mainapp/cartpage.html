@@ -1,0 +1,156 @@
+{% extends "mainapp/layout.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'mainapp/css/cartpage.css' %}">
+{% endblock %}
+
+{% block title %}
+Cart Page
+{% endblock %}
+
+{% block body %}
+    <div id="images" class="grid">
+        <div class="main-menu-block">
+            <ul class="main-menu">
+                {% for k, v in main_menu.items %}
+                    <li><a href="{% url 'category' k %}">{{ k }}</a> <!-- Category -->
+                        <ul class="sub-menu1">
+                            {% for i in v %}
+                                <a href="{% url 'category' i %}">{{ i }}</a>  <!-- Sub Category -->
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="category-name">
+            <h1>{{ name }}</h1>
+        </div>
+    </div>
+
+    <div id="cart-container" class="grid">
+        <form class="" action="index.html" method="post">
+            <table id="cartdetails">
+                <tr>
+                    <th>No.</th>
+                    <th>Product</th>
+                    <th>Unit Price</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                    <th>Remove</th>
+                </tr>
+                <tr>
+                    <td>1.</td>
+                    <td><img src="product11.jpg" class="model"><a href="">Cotton Short Sleeve T-shirt</a></td>
+                    <td>500 taka</td>
+                    <td>
+                        <input type="number" name="" min="1" value="1">
+                    </td>
+                    <td>500 taka</td>
+                    <td><a href=""><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                </tr>
+                <tr>
+                    <td>3.</td>
+                    <td><img src="product1.jpg" class="model"><a href="">Cotton Short Sleeve T-shirt</a></td>
+                    <td>500 taka</td>
+                    <td>
+                        <input type="number" name="" min="1" value="1">
+                    </td>
+                    <td>500 taka</td>
+                    <td><a href=""><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                </tr>
+                <tr>
+                    <td>4.</td>
+                    <td><img src="product1.jpg" class="model"><a href="">Cotton Short Sleeve T-shirt</a></td>
+                    <td>500 taka</td>
+                    <td>
+                        <input type="number" name="" min="1" value="1">
+                    </td>
+                    <td>500 taka</td>
+                    <td><a href=""><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                </tr>
+                <tr>
+                    <td>6.</td>
+                    <td><img src="product2.jpg" class="model"><a href="">Cotton Short Sleeve T-shirt</a></td>
+                    <td>500 taka</td>
+                    <td>
+                        <input type="number" name="" min="1" value="1">
+                    </td>
+                    <td>500 taka</td>
+                    <td><a href=""><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                </tr>
+                <tr>
+                    <td>5.</td>
+                    <td><img src="product3.jpg" class="model"><a href="">Cotton Short Sleeve T-shirt</a></td>
+                    <td>500 taka</td>
+                    <td>
+                        <input type="number" name="" min="1" value="1">
+                    </td>
+                    <td>500 taka</td>
+                    <td><a href=""><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                </tr>
+                <tr>
+                    <td>7.</td>
+                    <td><img src="product3.jpg" class="model"><a href="">Cotton Short Sleeve T-shirt</a></td>
+                    <td>500 taka</td>
+                    <td>
+                        <input type="number" name="" min="1" value="1">
+                    </td>
+                    <td>500 taka</td>
+                    <td><a href=""><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                </tr>
+                <tr>
+                    <td>9.</td>
+                    <td><img src="product3.jpg" class="model"><a href="">Cotton Short Sleeve T-shirt</a></td>
+                    <td>500 taka</td>
+                    <td>
+                        <input type="number" name="" min="1" value="1">
+                    </td>
+                    <td>500 taka</td>
+                    <td><a href=""><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                </tr>
+                <tr>
+                    <td>4.</td>
+                    <td><img src="product3.jpg" class="model"><a href="">Cotton Short Sleeve T-shirt</a></td>
+                    <td>500 taka</td>
+                    <td>
+                        <input type="number" name="" min="1" value="1">
+                    </td>
+                    <td>500 taka</td>
+                    <td><a href=""><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                </tr>
+            </table>
+            <div class="subtotal">
+                <div class="promocode">
+                    <form class="" action="index.html" method="post">
+                        <h2>Add Promo Code</h2>
+                        <input type="text" name="" value="">
+                        <input type="submit" name="" value="Apply">
+                    </form>
+                </div>
+                <div class="CheckOut">
+                    <table>
+                        <tr>
+                            <td><h2>Sub Total: </h2></td>
+                            <td><h3>1000 TAKA</h3></td>
+                        </tr>
+                        <tr>
+                            <td><h2>Discount <h5> (5%)</h5> :</h2></td>
+                            <td><h3> 50 taka</h3></td>
+                        </tr>
+                        <tr>
+                            <td><h2>Delivery fee:</h2></td>
+                            <td><h3> 50 taka</h3></td>
+                        </tr>
+                        <tr>
+                            <td><h2>Total:</h2></td>
+                            <td><h3> 950 taka</h3></td>
+                        </tr>
+                    </table>
+                    <input type="submit" name="" value="CheckOut">
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

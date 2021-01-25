@@ -24,21 +24,16 @@ def index(request):
             return redirect('index')
 
     else:
-        main_menu = {}
         products = Product.objects.all()
         categories = Category.objects.all()
 
-        for category in categories:
-            subcategorys = SubCategory.objects.filter(category=category.id)
-            list = []
-            for subcategory in subcategorys:
-                list.append(subcategory.subcategory_name)
-            main_menu[category.category_name] = list
+        main_menu = menu()
 
         if request.session.has_key('email'):
             isloggedin = True
         else:
             isloggedin = False
+
         return render(request, "mainapp/index.html", {
                 "products": products,
                 "categories": categories,
@@ -49,14 +44,7 @@ def index(request):
 
 def category(request, name):
     products = Product.objects.filter(subcategory__subcategory_name=name) | Product.objects.filter(subcategory__category__category_name=name)
-    main_menu = {}
-    categories = Category.objects.all()
-    for categor in categories:
-        subcategorys = SubCategory.objects.filter(category=categor.id)
-        list = []
-        for subcategory in subcategorys:
-            list.append(subcategory.subcategory_name)
-        main_menu[categor.category_name] = list
+    main_menu = menu()
 
     return render(request, "mainapp/category.html", {
             "main_menu": main_menu,
@@ -68,6 +56,49 @@ def product_show(request, ID):
     print(ID)
     return redirect('/')
 
+
+def cartpage(request):
+    if request.session.has_key('email'):
+        main_menu = menu()
+        return render(request, "mainapp/cartpage.html",{
+                "main_menu": main_menu
+            }
+        )
+    else:
+        redirect('/')
+
+def checkout(request):
+    if request.session.has_key('email'):
+        isloggedin = True
+        main_menu = menu()
+        return render(request, "mainapp/checkout.html",{
+                "main_menu": main_menu,
+                "isloggedin": isloggedin
+            }
+        )
+    else:
+        return redirect('/')
+
+def myprofile(request):
+    main_menu = menu()
+    return render(request, "mainapp/myprofile.html",{
+            "main_menu": main_menu
+        }
+    )
+
+
+
 def logout(request):
     del request.session['email']
     return redirect('/')
+
+def menu():
+    main_menu = {}
+    categories = Category.objects.all()
+    for categor in categories:
+        subcategorys = SubCategory.objects.filter(category=categor.id)
+        list = []
+        for subcategory in subcategorys:
+            list.append(subcategory.subcategory_name)
+        main_menu[categor.category_name] = list
+    return main_menu
