@@ -32,9 +32,10 @@ Songkolok
             <div class="carousel-cell">
                 <a class="product-link" data-toggle="model"
                 data-name="{{ product.title }}" data-img="{{ product.product_img.url }}" data-price="Total Price: {{ product.price }} Taka"
-                onclick="OpenProduct()"><img src="{{ product.product_img.url }}" ></a>
+                data-description="{{ product.description }}"
+                onclick="OpenProduct()"><img src="{{ product.product_img.url }}" >
                 <div class="details">
-                    <h4  >{{ product.title }}</h4>
+                    <h4  >{{ product.title }}</h4></a>
                     <h3>Price: {{ product.price }} tk</h3>
                     <i id="cart-bag" class='fas fa-shopping-bag'></i>
                 </div>
@@ -59,8 +60,8 @@ Songkolok
     <div class="main-product" >
         <a href="javascript:void(0)" class="closebtn" onclick="closeProduct()">&times;</a>
         <div class="product" id="product">
-            <img id="product-img" src=""/>
-            <h1 id="product-name"></h1>
+            <img id="product-img" src="" class="model">
+            <h1 id="product-name" ></h1>
             <form class="cart-form" action="" method="post">
                 <div class="field">
                     <div class="label">Color</div>
@@ -92,7 +93,7 @@ Songkolok
         </div>
         <div class="product-details">
             <h2>Description</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat praesentium dolores iure, quae, quo itaque quod beatae error ratione expedita quisquam sed! Fuga fugit nihil aliquam voluptates iusto minus rerum, illum nesciunt debitis dolor quaerat suscipit, autem tenetur at eos, vero quidem hic cumque corporis? Nisi, eius laborum est?</p>
+            <p  id="product-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat praesentium dolores iure, quae, quo itaque quod beatae error ratione expedita quisquam sed! Fuga fugit nihil aliquam voluptates iusto minus rerum, illum nesciunt debitis dolor quaerat suscipit, autem tenetur at eos, vero quidem hic cumque corporis? Nisi, eius laborum est?</p>
         </div>
     </div>
 </div>
@@ -103,7 +104,8 @@ Songkolok
     $('.product-link').click(function(){
         $('#product-name').html($(this).data('name'));
         $('#product-price').html($(this).data('price'));
-        $('#product-img').src($(this).data('img'));
+        $('#product-description').html($(this).data('description'));
+        $('#product-img').prop('src', $(this).data('img'));
     });
 </script>
 
