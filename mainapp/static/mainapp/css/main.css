@@ -15,11 +15,12 @@ body {
     display: flex;
     justify-content: space-between;
     min-height: 7vh;
+    background: rgb(0, 0, 0);
 }
 
 #nav a {
     text-decoration: none;
-    color: black;
+    color: white;
     font-family: serif;
 }
 
@@ -38,6 +39,7 @@ body {
     width: 100px;
     margin-left: 10px;
     margin-top: 7px;
+    filter: invert(100%);
 }
 
 .links {
@@ -53,6 +55,7 @@ body {
     margin-right: 50px;
     border-bottom-style: solid;
     height: 40px;
+    color: white;
 }
 
 #search input[type=text] {
@@ -72,7 +75,7 @@ body {
     width: 20%;
     padding-left: 0px;
     background: none;
-    color: #000000;
+    color: #ffffff;
     font-size: 20px;
     border: 0px solid;
     cursor: pointer;
@@ -80,7 +83,7 @@ body {
 }
 
 #search button:hover {
-    background: #e9e9e9;
+    background: #959595;
 }
 
 .nav-menu {
@@ -97,7 +100,7 @@ body {
     padding-top: 10px;
     padding-bottom: 10px;
     background: none;
-    box-shadow: 1px 1px 15px #c6c6c6;
+    box-shadow: 1px 1px 15px #4e4e4e;
     transition: 0.3s;
 }
 
@@ -326,7 +329,7 @@ body {
 .main-menu {
     padding-left: 35px;
     padding-right: 35px;
-    background-color: rgba(19, 19, 19, 0.79);
+    background-color: rgba(19, 19, 19, 0.9);
     display: inline-flex;
     justify-content: space-around;
     position: absolute;
@@ -675,8 +678,8 @@ body {
 
 }
 
-.product img{
-    max-width: 240px;
+#product-img{
+    width: 240px;
     height: 240px;
     float: left;
     margin-right: 20px;

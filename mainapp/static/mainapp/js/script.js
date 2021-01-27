@@ -18,7 +18,7 @@ function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
 }
 
-function OpenProduct(product){
+function OpenProduct(){
     document.getElementById("product-show").style.display = "flex";
     console.log(product.toString());
     document.getElementById("product-id").innerHTML = ID;
