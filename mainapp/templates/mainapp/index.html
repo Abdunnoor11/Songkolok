@@ -32,12 +32,12 @@ Songkolok
             <div class="carousel-cell">
                 <a class="product-link" data-toggle="model"
                 data-name="{{ product.title }}" data-img="{{ product.product_img.url }}" data-price="Total Price: {{ product.price }} Taka"
-                data-description="{{ product.description }}"
+                data-description="{{ product.description }}" data-size="{{ product.size }}"
                 onclick="OpenProduct()"><img src="{{ product.product_img.url }}" >
                 <div class="details">
                     <h4  >{{ product.title }}</h4></a>
                     <h3>Price: {{ product.price }} tk</h3>
-                    <i id="cart-bag" class='fas fa-shopping-bag'></i>
+                    <button data-product={{product.id}} data-action="add" id="cart-bag" class='fas fa-shopping-bag update-cart' type="button" name="button"> Add To Cart</button>
                 </div>
             </div>
             {% endfor %}
@@ -72,12 +72,9 @@ Songkolok
                 </div>
                 <div class="field">
                     <div class="label">Size</div>
-                    <select class="" name="">
-                        <option value="White">S</option>
-                        <option value="Black">M</option>
-                        <option value="Red">L</option>
-                        <option value="Red">XL</option>
-                        <option value="Red">XXL</option>
+                    <input id="product-size" type="text" name="" value="">
+                    <select  class="" name="">
+                        <option value="White">i</option>
                     </select>
                 </div>
                 <div class="field">
@@ -104,6 +101,7 @@ Songkolok
         $('#product-name').html($(this).data('name'));
         $('#product-price').html($(this).data('price'));
         $('#product-description').html($(this).data('description'));
+        $('#product-size').html($(this).data('size'));
         $('#product-img').prop('src', $(this).data('img'));
     });
 </script>

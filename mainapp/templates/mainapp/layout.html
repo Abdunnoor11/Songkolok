@@ -15,6 +15,27 @@
         <script type="text/javascript" src="{% static 'mainapp/js/script.js' %}"></script>
         {% block head %}{% endblock %}
         <link rel="shortcut icon" href="{% static 'mainapp/images/songkolok.png' %}">
+        <script type="text/javascript">
+            var user = '{{request.user}}'
+
+            function getToken(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+            }
+            var csrftoken = getToken('csrftoken');
+
+        </script>
         <title>{% block title %}{% endblock %}</title>
     </head>
 
@@ -46,19 +67,19 @@
                     <a style="cursor:pointer" onclick="login()"><i class='fas fa-user'></i> Login</a>
                 {% endif %}
                 <a style="cursor:pointer">My Profile</a>
-                <a href="#"><i id="shopping-bag" class='fas fa-shopping-bag'></i> Cart (0)</a>
-                <form id="search">
+                <a href="#"><i id="shopping-bag" class='fas fa-shopping-bag'></i> Cart ({{ cartItems }})</a>
+                <form class="search">
                     <input type="text" placeholder="Search Products..." name="search">
                     <button type="submit"><i class="fas fa-search"></i></button>
                 </form>
             </div>
 
             <div class="links">
-                <form id="search" class="nav-menu">
+                <form class="search" class="nav-menu">
                     <input type="text" placeholder="Search Products..." name="search">
                     <button type="submit"><i class="fa fa-search"></i></button>
                 </form>
-                <a class="nav-menu" id="cart" href=""><i id="shopping-bag" class='fas fa-shopping-bag' ></i> Cart (0)</a>
+                <a class="nav-menu" id="cart" href="{% url 'cartpage' %}"><i id="shopping-bag" class='fas fa-shopping-bag' ></i> Cart ({{ cartItems }})</a>
                 <a href="{% url 'myprofile' %}" class="nav-menu" style="cursor:pointer">My Profile</a>
                 {% if isloggedin %}
                     <a href="{% url 'logout' %}" class="nav-menu" style="cursor:pointer"><i class='fa fa-sign-out'></i> Log Out</a>
@@ -98,7 +119,7 @@
         <div id="signup-block">
             <div class="login-form">
                 <h1>Sign Up</h1>
-                <form action="{% url 'index' %}" method="post" id="login">
+                <form action="{% url 'index' %}" method="post" id="signup">
                     {% csrf_token %}
                     <h4>Email / Phone</h4>
                     <input type="email" class="fas fa-envelope" name="email" placeholder="&#xf0e0; Type your email/phone"><br>
@@ -144,7 +165,7 @@
             </div>
 
         </div>
-
+    <script type="text/javascript" src="{% static 'mainapp/js/cart.js' %}"></script>
     </body>
 
 </html>

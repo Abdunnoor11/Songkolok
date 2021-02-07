@@ -50,7 +50,7 @@ body {
     margin-right: 50px;
 }
 
-#search {
+.search {
     display: flex;
     margin-right: 50px;
     border-bottom-style: solid;
@@ -58,7 +58,7 @@ body {
     color: white;
 }
 
-#search input[type=text] {
+.search input[type=text] {
     font-family: sans-serif;
     padding: 10px;
     font-size: 17px;
@@ -67,11 +67,11 @@ body {
     background: none;
 }
 
-#search input[type=text]:focus {
+.search input[type=text]:focus {
     outline: none;
 }
 
-#search button {
+.search button {
     width: 20%;
     padding-left: 0px;
     background: none;
@@ -82,7 +82,7 @@ body {
     border-radius: 40px;
 }
 
-#search button:hover {
+.search button:hover {
     background: #959595;
 }
 
@@ -137,7 +137,7 @@ body {
     font-weight: normal;
     margin-bottom: 5px;
 }
-
+#signup input[type=email],
 #login input[type=email]{
     padding: 5px;
     margin-bottom: 15px;
@@ -147,10 +147,11 @@ body {
     background: none;
 }
 
+#signup input[type=password], input[type=email], button:focus,
 #login input[type=password], input[type=email], button:focus{
     outline: none;
 }
-
+#signup input[type=password],
 #login input[type=password]{
     padding: 5px;
     min-width: 200px;
@@ -159,6 +160,7 @@ body {
     background: none;
 }
 
+#signup h6,
 #login h6{
     text-align: right;
     margin-top: 10px;
@@ -167,6 +169,7 @@ body {
 
 }
 
+#signup button,
 #login button{
     padding: 5px;
     border-radius: 15px;
@@ -178,7 +181,7 @@ body {
     color: white;
 
 }
-
+#signup button:hover,
 #login button:hover{
     background: #003cbf;
 }
@@ -300,16 +303,16 @@ body {
         color: rgb(193, 193, 193);
     }
 
-    #search {
+    .search {
         margin-left: 25px;
         border-bottom-color: white;
     }
 
-    #search input[type=text] {
+    .search input[type=text] {
         color: white;
     }
 
-    #search button {
+    .search button {
         color: white;
     }
 
@@ -495,16 +498,16 @@ body {
     margin-left: 50px;
     font-size: 15px;
     cursor: pointer;
-    background-color: rgb(82, 208, 255);
+    background-color: rgb(255, 255, 255);
     padding: 9px;
-    color: rgb(40, 40, 40);
+    color: rgb(0, 0, 0);
     margin-top: 1px;
     border: 2px solid black;
     border-radius: 25px;
 }
 
 #cart-bag:hover{
-    background: rgb(189, 237, 255);
+    background: rgb(199, 242, 255);
 }
 
 #product-category {

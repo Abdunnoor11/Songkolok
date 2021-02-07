@@ -47,7 +47,7 @@
     align-items: center;
 }
 
-#cartdetails td img{
+#p-img{
     min-width: 50px;
     width: 5%;
 }
@@ -57,11 +57,27 @@
     margin-left: 15px;
 }
 
-#cartdetails td input[type="number"]{
-    width: 50px;
-    border: none;
-    padding: 3px;
-    text-overflow: clip;
+
+.quanti{
+    display: flex;
+    align-items: center;
+}
+
+.quantity{
+	display: inline-block;
+	padding-right:10px;
+
+}
+.chg-quantity{
+	width: 12px;
+	cursor: pointer;
+	display: block;
+	margin-top: 5px;
+	transition:.1s;
+}
+
+.chg-quantity:hover{
+	opacity: .6;
 }
 
 #cartdetails a{

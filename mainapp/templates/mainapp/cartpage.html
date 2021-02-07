@@ -30,7 +30,8 @@ Cart Page
     </div>
 
     <div id="cart-container" class="grid">
-        <form class="" action="index.html" method="post">
+        <form class="" action="{% url 'checkout' %}" method="post">
+            {% csrf_token %}
             <table id="cartdetails">
                 <tr>
                     <th>No.</th>
@@ -40,86 +41,23 @@ Cart Page
                     <th>Total Price</th>
                     <th>Remove</th>
                 </tr>
-                <tr>
-                    <td>1.</td>
-                    <td><img src="product11.jpg" class="model"><a href="">Cotton Short Sleeve T-shirt</a></td>
-                    <td>500 taka</td>
-                    <td>
-                        <input type="number" name="" min="1" value="1">
-                    </td>
-                    <td>500 taka</td>
-                    <td><a href=""><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-                </tr>
-                <tr>
-                    <td>3.</td>
-                    <td><img src="product1.jpg" class="model"><a href="">Cotton Short Sleeve T-shirt</a></td>
-                    <td>500 taka</td>
-                    <td>
-                        <input type="number" name="" min="1" value="1">
-                    </td>
-                    <td>500 taka</td>
-                    <td><a href=""><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-                </tr>
+                {% for i in items %}
                 <tr>
                     <td>4.</td>
-                    <td><img src="product1.jpg" class="model"><a href="">Cotton Short Sleeve T-shirt</a></td>
-                    <td>500 taka</td>
-                    <td>
-                        <input type="number" name="" min="1" value="1">
+                    <td><img id="p-img" src="{{ i.product.product_img.url }}" class="model"><a href=""> {{ i.product.product_name }} </a></td>
+                    <td>100 taka</td>
+                    <td class="quanti">
+                        <p class="quantity">{{ i.quantity }}</p>
+						<div class="quantity">
+							<img data-product="{{ i.product.id }}" data-action="add" class="chg-quantity update-cart" src="{% static  'mainapp/images/arrow-up.png' %}">
+
+							<img data-product="{{ i.product.id }}" data-action="remove" class="chg-quantity update-cart" src="{% static  'mainapp/images/arrow-down.png' %}">
+						</div>
                     </td>
-                    <td>500 taka</td>
+                    <td>{{ i.product.price }} taka</td>
                     <td><a href=""><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                 </tr>
-                <tr>
-                    <td>6.</td>
-                    <td><img src="product2.jpg" class="model"><a href="">Cotton Short Sleeve T-shirt</a></td>
-                    <td>500 taka</td>
-                    <td>
-                        <input type="number" name="" min="1" value="1">
-                    </td>
-                    <td>500 taka</td>
-                    <td><a href=""><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-                </tr>
-                <tr>
-                    <td>5.</td>
-                    <td><img src="product3.jpg" class="model"><a href="">Cotton Short Sleeve T-shirt</a></td>
-                    <td>500 taka</td>
-                    <td>
-                        <input type="number" name="" min="1" value="1">
-                    </td>
-                    <td>500 taka</td>
-                    <td><a href=""><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-                </tr>
-                <tr>
-                    <td>7.</td>
-                    <td><img src="product3.jpg" class="model"><a href="">Cotton Short Sleeve T-shirt</a></td>
-                    <td>500 taka</td>
-                    <td>
-                        <input type="number" name="" min="1" value="1">
-                    </td>
-                    <td>500 taka</td>
-                    <td><a href=""><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-                </tr>
-                <tr>
-                    <td>9.</td>
-                    <td><img src="product3.jpg" class="model"><a href="">Cotton Short Sleeve T-shirt</a></td>
-                    <td>500 taka</td>
-                    <td>
-                        <input type="number" name="" min="1" value="1">
-                    </td>
-                    <td>500 taka</td>
-                    <td><a href=""><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-                </tr>
-                <tr>
-                    <td>4.</td>
-                    <td><img src="product3.jpg" class="model"><a href="">Cotton Short Sleeve T-shirt</a></td>
-                    <td>500 taka</td>
-                    <td>
-                        <input type="number" name="" min="1" value="1">
-                    </td>
-                    <td>500 taka</td>
-                    <td><a href=""><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-                </tr>
+                {% endfor %}
             </table>
             <div class="subtotal">
                 <div class="promocode">
