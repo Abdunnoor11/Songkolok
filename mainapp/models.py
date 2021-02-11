@@ -37,7 +37,7 @@ class Product(models.Model):
     title = models.CharField(max_length=100)
     product_img = models.ImageField(upload_to='pics')
     description = models.TextField()
-    price = models.IntegerField()
+    price = models.FloatField()
     offer = models.BooleanField(default = False)
     subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
     color = models.CharField(max_length=100)
@@ -51,7 +51,7 @@ class Product(models.Model):
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
-    customer_name = models.CharField(max_length=100, blank=True, null= True)
+    customer_name = models.CharField(default='DEFAULT VALUE', max_length=100, blank=True, null= True)
     email = models.EmailField(default='DEFAULT VALUE', max_length=70, blank=False, null= True, unique= True)
     password = models.CharField(max_length=50, blank=False)
     customer_img = models.ImageField(upload_to='pics', blank=True, null= True)
@@ -59,7 +59,7 @@ class Customer(models.Model):
     phone = models.CharField(max_length=15, blank=True, null= True)
 
     def __str__(self):
-        return self.email1
+        return self.email
 
 
 class Order(models.Model):
@@ -70,6 +70,7 @@ class Order(models.Model):
 
     def __str__(self):
         return str(self.id)
+
     @property
     def shipping():
         shipping = False
@@ -83,7 +84,7 @@ class Order(models.Model):
     def get_cart_total(self):
         orderitems = self.orderitem_set.all()
         total = sum([item.get_total for item in orderitems])
-        return total
+        return total + 50
 
     @property
     def get_cart_items(self):
@@ -101,3 +102,13 @@ class OrderItem(models.Model):
     def get_total(self):
         total = self.product.price * self.quantity
         return total
+
+class ShippingAddress(models.Model):
+	customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
+	order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
+	address = models.CharField(max_length=200, null=False)
+	city = models.CharField(max_length=200, null=False)
+	date_added = models.DateTimeField(auto_now_add=True)
+
+	def __str__(self):
+		return self.address

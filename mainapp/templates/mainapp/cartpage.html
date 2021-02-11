@@ -1,5 +1,6 @@
 {% extends "mainapp/layout.html" %}
 {% load static %}
+{% load mathfilters %}
 
 {% block head %}
     <link rel="stylesheet" href="{% static 'mainapp/css/cartpage.css' %}">
@@ -43,9 +44,9 @@ Cart Page
                 </tr>
                 {% for i in items %}
                 <tr>
-                    <td>4.</td>
+                    <td>{{ forloop.counter }}</td>
                     <td><img id="p-img" src="{{ i.product.product_img.url }}" class="model"><a href=""> {{ i.product.product_name }} </a></td>
-                    <td>100 taka</td>
+                    <td>{{ i.product.price }} taka</td>
                     <td class="quanti">
                         <p class="quantity">{{ i.quantity }}</p>
 						<div class="quantity">
@@ -54,7 +55,7 @@ Cart Page
 							<img data-product="{{ i.product.id }}" data-action="remove" class="chg-quantity update-cart" src="{% static  'mainapp/images/arrow-down.png' %}">
 						</div>
                     </td>
-                    <td>{{ i.product.price }} taka</td>
+                    <td>{{ i.get_total }} taka</td>
                     <td><a href=""><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                 </tr>
                 {% endfor %}
@@ -71,19 +72,19 @@ Cart Page
                     <table>
                         <tr>
                             <td><h2>Sub Total: </h2></td>
-                            <td><h3>1000 TAKA</h3></td>
+                            <td><h3>{{ order.get_cart_total|sub:50|floatformat:2 }} Taka</h3></td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <td><h2>Discount <h5> (5%)</h5> :</h2></td>
                             <td><h3> 50 taka</h3></td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <td><h2>Delivery fee:</h2></td>
                             <td><h3> 50 taka</h3></td>
                         </tr>
                         <tr>
                             <td><h2>Total:</h2></td>
-                            <td><h3> 950 taka</h3></td>
+                            <td><h3> {{ order.get_cart_total|floatformat:2 }} Taka</h3></td>
                         </tr>
                     </table>
                     <input type="submit" name="" value="CheckOut">

@@ -31,10 +31,10 @@ Check Out
 
     <div id="checkout-container" class="grid">
         <div class="row">
-            <div class="col-75">
+            <div class="col-75" id="shipping-info">
                 <div class="container">
-                    <form action="/action_page.php">
-
+                    <form action="{% url 'PlaceOrder' %}" method="post">
+                        {% csrf_token %}
                         <div class="row">
                             <div class="col-50">
                                 <h3>Delivery Information</h3>
@@ -45,7 +45,7 @@ Check Out
                                 <div class="row">
                                     <div class="col-50">
                                         <label for="state">Phone Number</label>
-                                        <input type="text" id="state" name="state" placeholder="NY">
+                                        <input type="text" id="state" name="phone" placeholder="NY">
                                     </div>
                                 </div>
                                 <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
@@ -93,17 +93,17 @@ Check Out
             </div>
             <div class="col-25">
                 <div class="container">
-                    <h3>Order Summary <span class="price" style="color:black"><i class="fa fa-shopping-bag"></i> <b>4</b></span></h3>
-                    <p><a href="#">Product 1</a> <span class="price">&#2547; 250</span></p>
-                    <p><a href="#">Product 2</a> <span class="price">&#2547; 250</span></p>
-                    <p><a href="#">Product 3</a> <span class="price">&#2547; 250</span></p>
-                    <p><a href="#">Product 4</a> <span class="price">&#2547; 250</span></p>
-                    <hr>
-                    <p>Discount (5%) <span class="price" style="color:black"><b>&#2547; 30</b></span></p>
-                    <p>Delivery fee <span class="price" style="color:black"><b>&#2547; 30</b></span></p>
-                    <p>Total <span class="price" style="color:black"><b>&#2547; 1000</b></span></p>
+                    <h3>Order Summary <span class="price" style="color:black"><i class="fa fa-shopping-bag"></i></span></h3>
+                    {% for i in items %}
+                        <p><a href="#">{{ i.product.product_name }}</a> &times; {{ i.quantity }} <span class="price">&#2547; {{ i.get_total }}</span></p>
+                    {% endfor %}
+                        <hr>
+                        <!-- <p>Discount (5%) <span class="price" style="color:black"><b>&#2547; 30</b></span></p> -->
+                        <p>Delivery fee <span class="price" style="color:black"><b>&#2547; 50</b></span></p>
+                        <p>Total <span class="price" style="color:black"><b>&#2547; {{ order.get_cart_total|floatformat:2 }}</b></span></p>
                 </div>
             </div>
         </div>
     </div>
+
 {% endblock %}

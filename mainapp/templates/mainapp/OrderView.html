@@ -1,0 +1,43 @@
+{% extends "mainapp/layout.html" %}
+{% load static %}
+{% load mathfilters %}
+
+{% block head %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+{% endblock %}
+
+{% block title %}
+Order View
+{% endblock %}
+
+{% block body %}
+<table class="table table-dark table-hover">
+    <thead>
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">Customer Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Transaction Id</th>
+            <th scope="col">Order No</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Order Date</th>
+            <th scope="col">address</th>
+            <th scope="col">Payment Method</th>
+            <th scope="col">Order Status</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for k, v in views.items %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            {% for j in v %}
+            <td>{{ j }}</td>
+            {% endfor %}
+            <td>Cash On Delivery</td>
+            <td>Pending</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
