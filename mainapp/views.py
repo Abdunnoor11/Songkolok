@@ -23,6 +23,7 @@ def index(request):
             auth.login(request, user)
             return redirect('index')
         else:
+            messages.add_message(request, messages.WARNING, 'Password not same.')
             return redirect('index')
 
     elif request.method == 'POST' and 'login' in request.POST:
@@ -35,6 +36,7 @@ def index(request):
             auth.login(request, user)
             return redirect('index')
         else:
+            messages.add_message(request, messages.WARNING, 'Password not matched.')
             return redirect('index')
 
     else:
@@ -42,6 +44,9 @@ def index(request):
         categories = Category.objects.all()
 
         main_menu = menu()
+
+        poster = Poster.objects.get()
+        print(poster.img)
 
         if request.session.has_key('email'):
             isloggedin = True
@@ -64,7 +69,7 @@ def index(request):
                 "isloggedin": isloggedin,
                 "main_menu": main_menu,
                 "cartItems": cartItems,
-                # "message": message
+                "poster":poster
             }
         )
 

@@ -8,10 +8,18 @@ Songkolok
 
 {% block body %}
 
+{% if messages %}
+    {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}" role="alert">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+
 <div id="images" class="grid">
-    <img src="{% static 'mainapp/images/poster4.png' %}" alt="">
+    <img src="{{ poster.img.url }}" alt="">
     <div class="main-menu-block">
         <ul class="main-menu">
+            <li><a href="">Home</a></li>
             {% for k, v in main_menu.items %}
                 <li><a href="{% url 'category' k %}">{{ k }}</a> <!-- Category -->
                     <ul class="sub-menu1">
