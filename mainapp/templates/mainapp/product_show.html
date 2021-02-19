@@ -1,0 +1,79 @@
+{% extends "mainapp/layout.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'mainapp/css/myprofile.css' %}">
+    <link rel="stylesheet" href="{% static 'mainapp/css/product_show.css' %}">
+    <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block body %}
+    <div id="images" class="grid">
+        <div class="main-menu-block">
+            <ul class="main-menu">
+                <li><a href="{% url 'index' %}">Home</a></li>
+                {% for k, v in main_menu.items %}
+                    <li><a href="{% url 'category' k %}">{{ k }}</a> <!-- Category -->
+                        <ul class="sub-menu1">
+                            {% for i in v %}
+                                <a href="{% url 'category' i %}">{{ i }}</a>  <!-- Sub Category -->
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="category-name">
+            <h1>{{ name }}</h1>
+        </div>
+    </div>
+
+    <div id="product-show" class="grid">
+        <img id="product-img" src="{{ product.product_img.url }}" class="model">
+        <div class="product-details">
+            <h1>{{ product.title }}</h1>
+            <br><br>
+            <form class="cart-form" action="" method="post">
+                {% csrf_token %}
+                <div class="field">
+                    <div class="label">Color</div>
+                    <select class="" name="" disabled>
+                        <option value="White">COLOR Fiexed</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <div class="label">Size</div>
+                    <select class="" name="">
+                        {% for s in product.size %}
+                        <option value="White"> {{ s }} </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="field">
+                    <div class="label">Qualtity</div>
+                    <input type="number" min="1" name="" value="1">
+                </div>
+                <div class="field">
+                    <h2 id="product-price">Total Price: {{ product.price }} Taka</h2>
+                </div>
+                <button data-product={{product.id}} data-action="add" class='update-cart' type="button" name="button">Add To Cart</button>
+            </form>
+            <br>
+            <h2>highlights</h2>
+            <br>
+            <ul>
+                <li>Casual T-shirt</li>
+                <li>100% cotton</li>
+            </ul>
+            <br>
+            <h2>Description</h2>
+            <p>Songkolok is a trusted and reliable source for all your garment related needs from Bangladesh. Songkolok manufactures and supplies quality products in all categories at a competitive price range from their own production facility. It's a 100% cotton t-shirt with a premium finishing goods.</p>
+        </div>
+    </div>
+
+
+{% endblock %}

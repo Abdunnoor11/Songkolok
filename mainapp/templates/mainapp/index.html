@@ -10,24 +10,64 @@ Songkolok
 
 {% if messages %}
     {% for message in messages %}
-            <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}" role="alert">{{ message }}</div>
+        <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}" role="alert">{{ message }}</div>
     {% endfor %}
 {% endif %}
 
 
+
 <div id="images" class="grid">
-    <img src="{{ poster.img.url }}" alt="">
+    <div class="slideshow-container">
+    {% for i in posters %}
+        <div class="mySlides fade">
+            <img src="{{ i.img.url }}">
+        </div>
+    {% endfor %}
+    </div>
+    <br>
+
+    <div style="text-align:center">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+
+    <script>
+        var slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("dot");
+            for (i = 0; i < slides.length; i++) {
+              slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {
+              slideIndex = 1
+            }
+            for (i = 0; i < dots.length; i++) {
+              dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+            setTimeout(showSlides, 2000); // Change image every 2 seconds
+        }
+    </script>
+
+
     <div class="main-menu-block">
         <ul class="main-menu">
-            <li><a href="">Home</a></li>
+            <li><a href="{% url 'index' %}">Home</a></li>
             {% for k, v in main_menu.items %}
-                <li><a href="{% url 'category' k %}">{{ k }}</a> <!-- Category -->
-                    <ul class="sub-menu1">
-                        {% for i in v %}
-                            <a href="{% url 'category' i %}">{{ i }}</a>  <!-- Sub Category -->
-                        {% endfor %}
-                    </ul>
-                </li>
+            <li><a href="{% url 'category' k %}">{{ k }}</a> <!-- Category -->
+                <ul class="sub-menu1">
+                    {% for i in v %}
+                    <a href="{% url 'category' i %}">{{ i }}</a> <!-- Sub Category -->
+                    {% endfor %}
+                </ul>
+            </li>
             {% endfor %}
         </ul>
     </div>
@@ -35,21 +75,20 @@ Songkolok
 
 <div id="best-products" class="grid">
     <h1>Best Sell Products</h1>
-        <div class="carousel" data-flickity='{ "wrapAround": true }'>
-            {% for product in products %}
-            <div class="carousel-cell">
-                <a class="product-link" data-toggle="model"
-                data-name="{{ product.title }}" data-img="{{ product.product_img.url }}" data-price="Total Price: {{ product.price }} Taka"
-                data-description="{{ product.description }}" data-size="{{ product.size }}"
-                onclick="OpenProduct()"><img src="{{ product.product_img.url }}" >
+    <div class="carousel" data-flickity='{ "wrapAround": true }'>
+        {% for product in products %}
+        <div class="carousel-cell">
+            <a href="{% url 'product_show' product.id %}" class="product-link" data-toggle="model" data-name="{{ product.title }}" data-img="{{ product.product_img.url }}" data-price="Total Price: {{ product.price }} Taka" data-description="{{ product.description }}"
+                data-size="{{ product.size }}"><img src="{{ product.product_img.url }}">
                 <div class="details">
-                    <h4  >{{ product.title }}</h4></a>
-                    <h3>Price: {{ product.price }} tk</h3>
-                    <button data-product={{product.id}} data-action="add" id="cart-bag" class='fas fa-shopping-bag update-cart' type="button" name="button"> Add To Cart</button>
-                </div>
-            </div>
-            {% endfor %}
+                    <h4>{{ product.title }}</h4>
+            </a>
+            <h3>Price: {{ product.price }} tk</h3>
+            <button data-product={{product.id}} data-action="add" id="cart-bag" class='fas fa-shopping-bag update-cart' type="button" name="button">Add To Cart</button>
         </div>
+    </div>
+    {% endfor %}
+</div>
 </div>
 
 <div id="product-category" class="grid">
@@ -63,55 +102,5 @@ Songkolok
     </div>
 </div>
 
-<div class="product-show" id="product-show">
-    <div class="main-product" >
-        <a href="javascript:void(0)" class="closebtn" onclick="closeProduct()">&times;</a>
-        <div class="product" id="product">
-            <img id="product-img" src="" class="model">
-            <h1 id="product-name" ></h1>
-            <form class="cart-form" action="" method="post">
-                <div class="field">
-                    <div class="label">Color</div>
-                    <select class="" name="">
-                        <option value="White">White</option>
-                        <option value="Black">Black</option>
-                        <option value="Red">Red</option>
-                    </select>
-                </div>
-                <div class="field">
-                    <div class="label">Size</div>
-                    <input id="product-size" type="text" name="" value="">
-                    <select  class="" name="">
-                        <option value="White">i</option>
-                    </select>
-                </div>
-                <div class="field">
-                    <div class="label">Qualtity</div>
-                    <input type="number" min="1" name="" value="1">
-                </div>
-                <div class="">
-                    <h2 id="product-price">Total Price:  Taka</h2>
-                </div>
-                <input type="submit" name="" value="Add To Cart">
-            </form>
-        </div>
-        <div class="product-details">
-            <h2>Description</h2>
-            <p  id="product-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, quaerat praesentium dolores iure, quae, quo itaque quod beatae error ratione expedita quisquam sed! Fuga fugit nihil aliquam voluptates iusto minus rerum, illum nesciunt debitis dolor quaerat suscipit, autem tenetur at eos, vero quidem hic cumque corporis? Nisi, eius laborum est?</p>
-        </div>
-    </div>
-</div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<script>
-    $('.product-link').click(function(){
-        $('#product-name').html($(this).data('name'));
-        $('#product-price').html($(this).data('price'));
-        $('#product-description').html($(this).data('description'));
-        $('#product-size').html($(this).data('size'));
-        $('#product-img').prop('src', $(this).data('img'));
-    });
-</script>
 
 {% endblock %}

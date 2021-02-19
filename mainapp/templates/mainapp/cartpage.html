@@ -14,6 +14,7 @@ Cart Page
     <div id="images" class="grid">
         <div class="main-menu-block">
             <ul class="main-menu">
+                <li><a href="{% url 'index' %}">Home</a></li>
                 {% for k, v in main_menu.items %}
                     <li><a href="{% url 'category' k %}">{{ k }}</a> <!-- Category -->
                         <ul class="sub-menu1">

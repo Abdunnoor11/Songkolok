@@ -43,10 +43,13 @@ def index(request):
         products = Product.objects.all()
         categories = Category.objects.all()
 
+        for i in products:
+            print(type(i.size[0]))
+
         main_menu = menu()
 
-        poster = Poster.objects.get()
-        print(poster.img)
+        posters = Poster.objects.all()
+
 
         if request.session.has_key('email'):
             isloggedin = True
@@ -69,7 +72,7 @@ def index(request):
                 "isloggedin": isloggedin,
                 "main_menu": main_menu,
                 "cartItems": cartItems,
-                "poster":poster
+                "posters":posters
             }
         )
 
@@ -81,11 +84,16 @@ def category(request, name):
             "main_menu": main_menu,
             "products": products,
             "name": name
-        })
+    })
 
 def product_show(request, ID):
-    print(ID)
-    return redirect('/')
+    product = Product.objects.get(id=ID)
+    print(product.size[0])
+    main_menu = menu()
+    return render(request, "mainapp/product_show.html",{
+        "main_menu": main_menu,
+        "product":product,
+    })
 
 
 def cart(request):
