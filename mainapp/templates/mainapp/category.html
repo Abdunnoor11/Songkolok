@@ -40,7 +40,7 @@ Songkolok
                     <div class="details">
                         <h4>{{ product.title }}</h4>
                         <h3>Price: {{ product.price }} tk</h3>
-                        <i id="cart-bag" class='fas fa-shopping-bag'></i>
+                        <button data-product={{product.id}} data-action="add" id="cart-bag" class='update-cart' type="button" name="button">Add To Cart</button>
                     </div>
                 </div>
             {% endfor %}

@@ -530,11 +530,10 @@ body {
 }
 
 #cart-bag {
-    margin-left: 50px;
+    margin-left: 55px;
     font-size: 15px;
     cursor: pointer;
-    /* background-color: rgb(255, 255, 255); */
-    background: red;
+    background-color: rgb(255, 255, 255);
     padding: 9px;
     color: rgb(0, 0, 0);
     margin-top: 1px;
