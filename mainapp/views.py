@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
+
 
 import json
 import datetime
@@ -133,7 +135,6 @@ def myprofile(request):
     )
 
 
-
 def logout(request):
     del request.session['email']
     auth.logout(request)
@@ -207,6 +208,7 @@ def PlaceOrder(request):
 
     return redirect('index')
 
+@staff_member_required
 def OrderView(request):
     orders = Order.objects.all()
     customer = Customer.objects.all()
@@ -227,6 +229,24 @@ def OrderView(request):
             list.append(customer.address)
             views[order] = list
 
+    for i in views:
+        print(i)
+
     return render(request, "mainapp/OrderView.html",{
         "views":views
+    })
+
+@staff_member_required
+def orderitemview(request, ID):
+    order = Order.objects.get(id=ID)
+    sa = ShippingAddress.objects.get(order=order)
+    items = OrderItem.objects.filter(order=order)
+
+
+
+
+    return render(request, "mainapp/orderitemview.html",{
+        "order":order,
+        "sa":sa,
+        "items":items
     })

@@ -11,6 +11,9 @@ Order View
 {% endblock %}
 
 {% block body %}
+
+<!-- <a href="#">asdfaf</a> -->
+
 <table class="table table-dark table-hover">
     <thead>
         <tr>
@@ -30,9 +33,9 @@ Order View
     <tbody>
     {% for k, v in views.items %}
         <tr>
-            <th scope="row">{{ forloop.counter }}</th>
+            <th scope="row"><a href="{% url 'orderitemview' k %}">{{ forloop.counter }}</a></th>
             {% for j in v %}
-            <td>{{ j }}</td>
+            <a href=""><td>{{ j }}</td></a>
             {% endfor %}
             <td>Cash On Delivery</td>
             <td>Pending</td>
