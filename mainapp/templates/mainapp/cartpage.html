@@ -11,6 +11,13 @@ Cart Page
 {% endblock %}
 
 {% block body %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}" role="alert">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
     <div id="images" class="grid">
         <div class="main-menu-block">
             <ul class="main-menu">

@@ -736,3 +736,7 @@ body {
     float: left;
     width: 55px;
 }
+
+.alert{
+    background: red;
+}

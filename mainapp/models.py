@@ -40,7 +40,7 @@ class Product(models.Model):
     title = models.CharField(max_length=100)
     product_img = models.ImageField(upload_to='pics')
     description = models.TextField()
-    price = models.FloatField()
+    price = models.DecimalField(max_digits=7, decimal_places=2)
     offer = models.BooleanField(default = False)
     subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
     color = models.CharField(max_length=100)

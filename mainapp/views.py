@@ -5,6 +5,7 @@ from django.contrib import messages
 
 import json
 import datetime
+from . utils import cookieCart, cartData
 from .models import *
 import jinja2
 # Create your views here.
@@ -43,33 +44,16 @@ def index(request):
         products = Product.objects.all()
         categories = Category.objects.all()
 
-        for i in products:
-            print(type(i.size[0]))
-
         main_menu = menu()
 
         posters = Poster.objects.all()
 
-
-        if request.session.has_key('email'):
-            isloggedin = True
-        else:
-            isloggedin = False
-
-        if request.user.is_authenticated:
-            customer = request.user.customer
-            order, created = Order.objects.get_or_create(customer=customer, complete=False)
-            items = order.orderitem_set.all()
-            cartItems = order.get_cart_items
-        else:
-            items = []
-            order = {'get_cart_total':0, 'get_cart_items':0, 'shipping': False}
-            cartItems = order['get_cart_items']
+        data = cartData(request)
+        cartItems = data['cartItems']
 
         return render(request, "mainapp/index.html", {
                 "products": products,
                 "categories": categories,
-                "isloggedin": isloggedin,
                 "main_menu": main_menu,
                 "cartItems": cartItems,
                 "posters":posters
@@ -80,33 +64,39 @@ def category(request, name):
     products = Product.objects.filter(subcategory__subcategory_name=name) | Product.objects.filter(subcategory__category__category_name=name)
     main_menu = menu()
 
+    data = cartData(request)
+    cartItems = data['cartItems']
+    order = data['order']
+    items = data['items']
+
     return render(request, "mainapp/category.html", {
             "main_menu": main_menu,
             "products": products,
-            "name": name
+            "name": name,
+            "cartItems":cartItems
     })
 
 def product_show(request, ID):
     product = Product.objects.get(id=ID)
-    print(product.size[0])
+
+    data = cartData(request)
+    cartItems = data['cartItems']
+
     main_menu = menu()
     return render(request, "mainapp/product_show.html",{
         "main_menu": main_menu,
         "product":product,
+        "cartItems":cartItems
     })
 
 
 def cart(request):
     main_menu = menu()
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.all()
-        cartItems = order.get_cart_items
-    else:
-        items = []
-        order = {'get_cart_total':0, 'get_cart_items':0, 'shipping': False}
-        cartItems = order.get_cart_items
+
+    data = cartData(request)
+    cartItems = data['cartItems']
+    order = data['order']
+    items = data['items']
 
     return render(request, 'mainapp/cartpage.html',{
         'items':items,
@@ -115,22 +105,20 @@ def cart(request):
         'cartItems': cartItems
     })
 
+
 def checkout(request):
     if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.all()
-        cartItems = order.get_cart_items
-        isloggedin = True
+        data = cartData(request)
+        cartItems = data['cartItems']
+        order = data['order']
+        items = data['items']
     else:
-        items = []
-        order = {'get_cart_total':0, 'get_cart_items':0, 'shipping': False}
-        cartItems = order.get_cart_items
+        messages.add_message(request, messages.WARNING, 'Login Please!!!')
+        return redirect('cartpage')
 
     main_menu = menu()
     return render(request, "mainapp/checkout.html",{
             "main_menu": main_menu,
-            "isloggedin": isloggedin,
             'items':items,
             'order': order,
             "cartItems": cartItems
@@ -165,6 +153,7 @@ def menu():
 
 def updateItem(request):
     data = json.loads(request.body)
+
     productId = data['productId']
     action = data['action']
 
