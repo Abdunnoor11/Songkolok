@@ -81,7 +81,7 @@ def category(request, name):
 
 def product_show(request, ID):
     product = Product.objects.get(id=ID)
-
+    
     data = cartData(request)
     cartItems = data['cartItems']
 
@@ -265,7 +265,7 @@ def orderitemview(request, ID):
         "items":items
     })
 
-def Continue(request):    
+def Continue(request):
     products = Product.objects.all()
     categories = Category.objects.all()
 
