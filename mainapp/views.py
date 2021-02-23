@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
@@ -35,9 +35,8 @@ def index(request):
         login = Customer.objects.filter(email=email, password=password)
         user = auth.authenticate(username=email, password=password)
         if login and user is not None:
-            request.session['email'] = email
             auth.login(request, user)
-            return redirect('index')
+            return redirect('cartpage')
         else:
             messages.add_message(request, messages.WARNING, 'Password not matched.')
             return redirect('index')
@@ -52,6 +51,8 @@ def index(request):
 
         data = cartData(request)
         cartItems = data['cartItems']
+        order = data['order']
+        items = data['items']
 
         return render(request, "mainapp/index.html", {
                 "products": products,
@@ -136,7 +137,6 @@ def myprofile(request):
 
 
 def logout(request):
-    del request.session['email']
     auth.logout(request)
     return redirect('/')
 
@@ -161,10 +161,12 @@ def updateItem(request):
     print('Action:', action)
     print('productId:', productId)
 
-    customer = request.user.customer
+
+    device = request.COOKIES['device']
+    customer, created = Customer.objects.get_or_create(device=device)
+
     product = Product.objects.get(id=productId)
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
-
     orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
 
     if action == 'add':
@@ -188,16 +190,27 @@ def PlaceOrder(request):
         city = request.POST['city']
         transaction_id = datetime.datetime.now().timestamp()
 
+        data = cartData(request)
+        order = data['order']
+        items = data['items']
+
         customer = request.user.customer
-        print(customer)
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        order = Order.objects.create(customer=customer, complete=False)
         order.transaction_id = transaction_id
 
-        c = Customer.objects.get(email=customer)
-        c.customer_name = name
-        c.phone = phone
-        c.address = address
-        c.save()
+        for item in items:
+            product = Product.objects.get(id=item['id'])
+            orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+            orderItem.quantity = item['quantity']
+            orderItem.save()
+
+
+        customer.customer_name = name
+        customer.phone = phone
+        customer.address = address
+        customer.save()
+
+        # print(order.shipping)
 
         if order.get_cart_total:
             order.complete = True
@@ -207,6 +220,7 @@ def PlaceOrder(request):
         SA.save()
 
     return redirect('index')
+
 
 @staff_member_required
 def OrderView(request):
@@ -250,3 +264,25 @@ def orderitemview(request, ID):
         "sa":sa,
         "items":items
     })
+
+def Continue(request):    
+    products = Product.objects.all()
+    categories = Category.objects.all()
+
+    main_menu = menu()
+
+    posters = Poster.objects.all()
+
+    data = cartData(request)
+    cartItems = data['cartItems']
+    order = data['order']
+    items = data['items']
+
+    return render(request, "mainapp/Continue.html", {
+            "products": products,
+            "categories": categories,
+            "main_menu": main_menu,
+            "cartItems": cartItems,
+            "posters":posters
+        }
+    )

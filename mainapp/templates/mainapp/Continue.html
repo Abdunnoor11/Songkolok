@@ -8,12 +8,18 @@ Songkolok
 
 {% block body %}
 
-{% if messages %}
-    {% for message in messages %}
-        <div class="alert {% if message.tags %}alert-{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}danger{% else %}{{ message.tags }}{% endif %}{% endif %}" role="alert">{{ message }}</div>
-    {% endfor %}
-{% endif %}
+<style>
+    .main-product{
+        /* background: red; */
+        text-align: center;
+    }
 
+    .main-product button{
+        width: 50%;
+        padding: 10px;
+    }
+
+</style>
 
 <div id="images" class="grid">
     <div class="slideshow-container">
@@ -92,6 +98,21 @@ Songkolok
     {% endfor %}
 </div>
 </div>
+
+<div class="product-show" id="product-show">
+    <div class="main-product" >
+        <!-- <a href="javascript:void(0)" class="closebtn" onclick="closeProduct()">&times;</a> -->
+        <h1>Thanks For Your Order.</h1>
+        <a href="{% url 'index' %}"><button onclick="submit()" type="button" name="button">Countinue</button></a>
+        <!-- <h3 onclick="submit()"><a href="{% url 'index' %}">Countinue</a></h3> -->
+    </div>
+</div>
+
+<script type="text/javascript">
+    cart = {}
+    console.log('Cart Created!', cart)
+    document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
+</script>
 
 <div id="product-category" class="grid">
     <h1>Category</h1>

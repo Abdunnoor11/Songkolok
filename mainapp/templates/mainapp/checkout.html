@@ -33,8 +33,8 @@ Check Out
     <div id="checkout-container" class="grid">
         <div class="row">
             <div class="col-75" id="shipping-info">
-                <div class="container">
-                    <form action="{% url 'PlaceOrder' %}" method="post">
+                <div class="container" id="user-info">
+                    <form id="form" action="{% url 'PlaceOrder' %}" method="post">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-50">
@@ -58,9 +58,9 @@ Check Out
 
                             <div class="col-50">
                                 <h3>Payment Method</h3>
-                                <label><input type="checkbox" id="mycheck" onclick="payment()"> Cash on Delivery</label>
+                                <label><input type="checkbox" id="mycheck" onclick="payment()" checked> Cash on Delivery</label>
 
-                                <div id="cash" disabled>
+                                <div id="cash">
                                     <label for="fname">Accepted Cards</label>
                                     <div class="icon-container">
                                         <i class="fa fa-cc-visa" style="color:navy;"></i>
@@ -106,6 +106,5 @@ Check Out
             </div>
         </div>
     </div>
-
 
 {% endblock %}

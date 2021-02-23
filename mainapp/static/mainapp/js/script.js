@@ -19,8 +19,7 @@ function closeNav() {
 }
 
 function OpenProduct(){
-    document.getElementById("product-show").style.display = "flex";
-    console.log(product.toString());
+    document.getElementById("product-show").style.display = "flex";    
     document.getElementById("product-id").innerHTML = ID;
 }
 

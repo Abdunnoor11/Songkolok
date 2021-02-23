@@ -106,3 +106,7 @@ span.price {
     margin-bottom: 20px;
   }
 }
+
+#cash{
+    display: none;
+}
