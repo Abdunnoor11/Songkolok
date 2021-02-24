@@ -26,8 +26,7 @@ SECRET_KEY = 'xky(tzo)cuony*f2i+6q+4le%w47hg87)re^(d!fro7o7lj0l%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    '127.0.0.1',
+ALLOWED_HOSTS = [    
     'songkolok.herokuapp.com'
 ]
 
