@@ -1,1 +1,1 @@
-web: gunicorn songkolok.wsgi
+web: gunicorn songkolok.wsgi --log-file -
