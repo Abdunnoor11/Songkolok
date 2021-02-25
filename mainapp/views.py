@@ -81,7 +81,7 @@ def category(request, name):
 
 def product_show(request, ID):
     product = Product.objects.get(id=ID)
-    
+
     data = cartData(request)
     cartItems = data['cartItems']
 
@@ -219,7 +219,7 @@ def PlaceOrder(request):
         SA = ShippingAddress(customer=customer, order=order, address=address, city=city)
         SA.save()
 
-    return redirect('index')
+    return redirect('Continue')
 
 
 @staff_member_required
@@ -255,9 +255,6 @@ def orderitemview(request, ID):
     order = Order.objects.get(id=ID)
     sa = ShippingAddress.objects.get(order=order)
     items = OrderItem.objects.filter(order=order)
-
-
-
 
     return render(request, "mainapp/orderitemview.html",{
         "order":order,
