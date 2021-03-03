@@ -36,7 +36,7 @@ def index(request):
         user = auth.authenticate(username=email, password=password)
         if login and user is not None:
             auth.login(request, user)
-            return redirect('cartpage')
+            return redirect('index')
         else:
             messages.add_message(request, messages.WARNING, 'Password not matched.')
             return redirect('index')
@@ -129,9 +129,21 @@ def checkout(request):
     )
 
 def myprofile(request):
+    if request.user.is_authenticated:
+        data = cartData(request)
+        cartItems = data['cartItems']
+        customer = request.user.customer
+        orders = Order.objects.filter(customer=customer)        
+    else:
+        messages.add_message(request, messages.WARNING, 'Login Please!!!')
+        return redirect('/')
+
     main_menu = menu()
     return render(request, "mainapp/myprofile.html",{
-            "main_menu": main_menu
+            "main_menu": main_menu,
+            "cartItems":cartItems,
+            "customer":customer,
+            "orders":orders
         }
     )
 
@@ -152,34 +164,34 @@ def menu():
     return main_menu
 
 
-def updateItem(request):
-    data = json.loads(request.body)
-
-    productId = data['productId']
-    action = data['action']
-
-    print('Action:', action)
-    print('productId:', productId)
-
-
-    device = request.COOKIES['device']
-    customer, created = Customer.objects.get_or_create(device=device)
-
-    product = Product.objects.get(id=productId)
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
-    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
-
-    if action == 'add':
-        orderItem.quantity = (orderItem.quantity + 1)
-    elif action == 'remove':
-        orderItem.quantity = (orderItem.quantity - 1)
-
-    orderItem.save()
-
-    if orderItem.quantity <= 0:
-        orderItem.delete()
-
-    return JsonResponse('Item was added', safe=False)
+# def updateItem(request):
+#     data = json.loads(request.body)
+#
+#     productId = data['productId']
+#     action = data['action']
+#
+#     print('Action:', action)
+#     print('productId:', productId)
+#
+#
+#     device = request.COOKIES['device']
+#     customer, created = Customer.objects.get_or_create(device=device)
+#
+#     product = Product.objects.get(id=productId)
+#     order, created = Order.objects.get_or_create(customer=customer, complete=False)
+#     orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+#
+#     if action == 'add':
+#         orderItem.quantity = (orderItem.quantity + 1)
+#     elif action == 'remove':
+#         orderItem.quantity = (orderItem.quantity - 1)
+#
+#     orderItem.save()
+#
+#     if orderItem.quantity <= 0:
+#         orderItem.delete()
+#
+#     return JsonResponse('Item was added', safe=False)
 
 def PlaceOrder(request):
     if request.user.is_authenticated:
