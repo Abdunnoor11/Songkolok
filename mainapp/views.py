@@ -133,7 +133,7 @@ def myprofile(request):
         data = cartData(request)
         cartItems = data['cartItems']
         customer = request.user.customer
-        orders = Order.objects.filter(customer=customer)        
+        orders = Order.objects.filter(customer=customer)
     else:
         messages.add_message(request, messages.WARNING, 'Login Please!!!')
         return redirect('/')
@@ -162,36 +162,6 @@ def menu():
             list.append(subcategory.subcategory_name)
         main_menu[categor.category_name] = list
     return main_menu
-
-
-# def updateItem(request):
-#     data = json.loads(request.body)
-#
-#     productId = data['productId']
-#     action = data['action']
-#
-#     print('Action:', action)
-#     print('productId:', productId)
-#
-#
-#     device = request.COOKIES['device']
-#     customer, created = Customer.objects.get_or_create(device=device)
-#
-#     product = Product.objects.get(id=productId)
-#     order, created = Order.objects.get_or_create(customer=customer, complete=False)
-#     orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
-#
-#     if action == 'add':
-#         orderItem.quantity = (orderItem.quantity + 1)
-#     elif action == 'remove':
-#         orderItem.quantity = (orderItem.quantity - 1)
-#
-#     orderItem.save()
-#
-#     if orderItem.quantity <= 0:
-#         orderItem.delete()
-#
-#     return JsonResponse('Item was added', safe=False)
 
 def PlaceOrder(request):
     if request.user.is_authenticated:
