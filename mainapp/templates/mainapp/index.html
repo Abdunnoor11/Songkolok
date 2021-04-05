@@ -15,46 +15,15 @@ Songkolok
 {% endif %}
 
 
+
 <div id="images" class="grid">
-    <div class="slideshow-container">
-    {% for i in posters %}
-        <div class="mySlides fade">
-            <img src="{{ i.img.url }}">
+        <div id="slider">
+            <figure>
+                {% for i in posters %}
+                    <img src="{{ i.img.url }}">
+                {% endfor %}
+            </figure>
         </div>
-    {% endfor %}
-    </div>
-    <br>
-
-    <div style="text-align:center">
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-    </div>
-
-    <script>
-        var slideIndex = 0;
-        showSlides();
-
-        function showSlides() {
-            var i;
-            var slides = document.getElementsByClassName("mySlides");
-            var dots = document.getElementsByClassName("dot");
-            for (i = 0; i < slides.length; i++) {
-              slides[i].style.display = "none";
-            }
-            slideIndex++;
-            if (slideIndex > slides.length) {
-              slideIndex = 1
-            }
-            for (i = 0; i < dots.length; i++) {
-              dots[i].className = dots[i].className.replace(" active", "");
-            }
-            slides[slideIndex - 1].style.display = "block";
-            dots[slideIndex - 1].className += " active";
-            setTimeout(showSlides, 2000); // Change image every 2 seconds
-        }
-    </script>
-
 
     <div class="main-menu-block">
         <ul class="main-menu">
@@ -74,9 +43,6 @@ Songkolok
 
 <div id="best-products" class="grid">
     <h1>Best Sell Products</h1>
-    <!-- {% if s == True %}
-        <h1>{{ OK }}</h1>
-    {% endif %}     -->
     <div class="carousel" data-flickity='{ "wrapAround": true }'>
         {% for product in products %}
         <div class="carousel-cell">
